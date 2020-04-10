@@ -1,0 +1,22 @@
+header, header ul{
+    display: flex;
+}
+
+header{
+    justify-content: space-between;
+    align-items: center;  
+    background-color: #00C58C;
+    color: #f0f0f0;
+    height: 100px;
+}
+
+header .logo{
+    width: 200px;
+    margin-left: 5vw;
+}
+
+header ul {
+    margin-right: 5vw;
+    padding: 0;
+    list-style: none;
+}
