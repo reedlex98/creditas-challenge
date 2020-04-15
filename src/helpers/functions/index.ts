@@ -1,7 +1,9 @@
-export function valorTotalAPagar(iof : number, taxaDeJuros : number, prazo : number, valorDoEmprestimo : number) : number {
-    return ((iof / 100) + (taxaDeJuros / 100) + (prazo / 1000) + 1) * valorDoEmprestimo
+import { IOF, TAXADEJUROS } from '../constants'
+
+export function calculaValorTotalAPagar(prazo: number, valorDoEmprestimo: number): number {
+    return ((IOF / 100) + (TAXADEJUROS / 100) + (prazo / 1000) + 1) * valorDoEmprestimo
 }
 
-export function valorDaParcela(valorTotalAPagar : number, prazo : number) : number {
+export function calculaValorDaParcela(valorTotalAPagar: number, prazo: number): number {
     return valorTotalAPagar / prazo
 }

@@ -1,8 +1,11 @@
+/* Relacionado ao CreditCalculator */
+
 .cc-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 10vh;
+    
 }
 
 .cc-title{
@@ -14,16 +17,22 @@
 }
 
 .cc-body{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     margin-top: 25px;
 }
+
+/* Relacionado ao CreditCalculatorForm */
 
 .cc-form{
     display: flex;
     flex-wrap: wrap;
-    width: 600px;
-    justify-content: flex-start;
+    max-width: 485px;
+    justify-content: center;
     color: #505050;
-
 }
 
 .cc-form-control{
@@ -31,23 +40,80 @@
     flex-direction: column;
     width: 200px;
     height: 100px;
-    margin: 10px;
+    margin: 0px 20px;
 }
 
 .cc-form-control input, .cc-form-control select{
-    margin: 10px 0;
+    margin: 5px 0;
+} 
+
+.cc-form-control select{
+    background-color: #fff;
 } 
 
 .cc-form-control input[type=number], .cc-form-control select{
-    height: 35px;
-    border-radius: 10px;
+    height: 40px;
+    border-radius: 5px;
     outline: none;
     border: 1px solid #d0d0d0;
     color: #505050;
     font-size: 1.05em;
-    padding-left: 10px;
+    padding: 0 10px;
 } 
 
 .cc-form-control label{
     font-weight: bold;
+    font-size: .9em;
+}
+
+/* Relacionado ao CreditRequestCard */
+
+.cc-request-card{
+    width: 250px;
+    height: 300px;
+    border-top: 5px solid #CDCDCD;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #505050
+}
+
+@media screen and (min-width: 800px){
+    .cc-request-card{
+        margin-left: 50px;
+    }
+}
+
+.cc-rc-group, .cc-request-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cc-rc-group{
+    margin: 10px 0
+}
+
+.cc-rc-group .parcel-value{
+    font-size: 1.5em;
+}
+
+.cc-rc-group .value{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.text-green{
+    font-size: 1.5em;
+    color: #00C58C
+}
+
+.btn-solicitar{
+    color: #275033;
+    background-color: #A6FF2D;
+    border: none;
+    outline: none;
+    padding: 10px 50px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold
 }

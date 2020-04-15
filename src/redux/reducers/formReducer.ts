@@ -1,11 +1,8 @@
 import initialState, { ICreditCalculatorForm } from '../initialState'
 import { FormActionTypes } from '../actions/actionTypes'
 import { Garantia } from '../../helpers/enum'
-
-interface IAction {
-    type: FormActionTypes,
-    [key: string]: number | string,
-}
+import { IAction } from '../actions/actionCreators'
+import {calculaValorDaParcela,calculaValorTotalAPagar} from '../../helpers/functions'
 
 function corrigeValor(value: number, min: number, max: number): number {
     if (value >= min && value <= max) return value
@@ -26,6 +23,9 @@ function configuraStatePelaGarantia(garantia: Garantia, valorEmprestimo: number,
             maxGarantia: 3000000,
             minEmprestimo: 3000,
             maxEmprestimo: 100000,
+            valorParcela: null,
+            totalAPagar: null
+
         }
     }
     else {
@@ -39,6 +39,8 @@ function configuraStatePelaGarantia(garantia: Garantia, valorEmprestimo: number,
             maxGarantia: 100000000,
             minEmprestimo: 30000,
             maxEmprestimo: 4500000,
+            valorParcela: null,
+            totalAPagar: null
         }
     }
 }
@@ -48,11 +50,15 @@ export default function formReducer(state: ICreditCalculatorForm = initialState.
         case FormActionTypes.UPDATE_PARCELAS:
             return { ...state, parcelas: action.parcelas }
         case FormActionTypes.UPDATE_VALOR_GARANTIA:
-            return { ...state, valorGarantia: corrigeValor(action.valorGarantia as number, state.minGarantia, state.maxGarantia) }
+            return { ...state, valorGarantia: action.valorGarantia }
         case FormActionTypes.UPDATE_VALOR_EMPRESTIMO:
-            return { ...state, valorEmprestimo: corrigeValor(action.valorEmprestimo as number, state.minGarantia, state.maxGarantia) }
+            return { ...state, valorEmprestimo: action.valorEmprestimo }
         case FormActionTypes.UPDATE_GARANTIA:
             return configuraStatePelaGarantia(action.garantia as Garantia, state.valorEmprestimo, state.valorGarantia)
+        case FormActionTypes.CALCULA_TOTAL_A_PAGAR:
+            return { ...state, totalAPagar: calculaValorTotalAPagar(state.parcelas, state.valorEmprestimo)}
+        case FormActionTypes.CALCULA_VALOR_DA_PARCELA:
+            return { ...state, valorParcela: calculaValorDaParcela(state.totalAPagar as number, state.parcelas)}
         default:
             return state
     }

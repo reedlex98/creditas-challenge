@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../assets/creditas-branco.png'
+import logo from '../../../assets/creditas-branco.png'
 import './styles.css'
 
 export default function Header () {

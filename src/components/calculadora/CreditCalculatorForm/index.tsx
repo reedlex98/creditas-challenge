@@ -2,30 +2,35 @@ import React, { Component } from 'react';
 import NumberInput from '../NumberInput'
 import SelectField from '../SelectField'
 import SliderInput from '../SliderInput'
-import {Garantia} from '../../../helpers/enum'
+import { Garantia } from '../../../helpers/enum'
+import { connect } from 'react-redux'
+import { IState, ICreditCalculatorForm } from '../../../redux/initialState'
+import { updateGarantia, updateParcelas, updateValorEmprestimo, updateValorGarantia } from '../../../redux/actions/actionCreators'
 
-class CreditCalculatorForm extends Component {
-    state = {
-        parcelas: 24,
-        garantia: Garantia.VEICULO,
-        opcoesDeParcela: [24, 36, 48],
-        valorGarantia: 5000,
-        valorEmprestimo: 3000,
-        minGarantia: 5000,
-        maxGarantia: 3000000,
-        minEmprestimo: 3000,
-        maxEmprestimo: 100000,
-    }
+interface ICreditCalculatorFormProps extends ICreditCalculatorForm {
+    updateGarantia: (garantia: Garantia) => void,
+    updateParcelas: (parcela: number) => void,
+    updateValorEmprestimo: (valorEmprestimo: number) => void,
+    updateValorGarantia: (valorGarantia: number) => void,
+}
+
+class CreditCalculatorForm extends Component<ICreditCalculatorFormProps> {
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target
-
-        if (name === "garantia") {
-            this.setState(this.configuraStatePelaGarantia(value))
-        } else {
-            this.setState({
-                [name]: value
-            })
+        switch (name) {
+            case "parcelas":
+                this.props.updateParcelas(parseInt(value))
+                break;
+            case "garantia":
+                this.props.updateGarantia(value as Garantia)
+                break;
+            case "valorGarantia":
+                this.props.updateValorGarantia(value ? parseInt(value) : 0)
+                break;
+            case "valorEmprestimo":
+                this.props.updateValorEmprestimo(value ? parseInt(value) : 0)
+                break;
         }
     }
 
@@ -35,63 +40,56 @@ class CreditCalculatorForm extends Component {
                 name="parcelas"
                 onChange={this.handleChange}
                 title="Número de parcelas"
-                options={this.state.opcoesDeParcela}
-                value={this.state.parcelas}
+                options={this.props.opcoesDeParcela}
+                value={this.props.parcelas}
             />
             <SelectField
                 name="garantia"
                 onChange={this.handleChange}
                 title="Garantia"
                 options={[Garantia.IMOVEL, Garantia.VEICULO]}
-                value={this.state.garantia}
+                value={this.props.garantia}
             />
             <NumberInput
                 name="valorGarantia"
                 onChange={this.handleChange}
                 title="Valor da Garantia"
-                value={this.state.valorGarantia}
-                max={this.state.maxGarantia}
-                min={this.state.minGarantia}
+                value={this.props.valorGarantia}
+                max={this.props.maxGarantia}
+                min={this.props.minGarantia}
             />
             <SliderInput
                 name="valorGarantia"
                 onChange={this.handleChange}
-                value={this.state.valorGarantia}
-                max={this.state.maxGarantia}
-                min={this.state.minGarantia}
+                value={this.props.valorGarantia}
+                max={this.props.maxGarantia}
+                min={this.props.minGarantia}
             />
             <NumberInput
                 name="valorEmprestimo"
                 onChange={this.handleChange}
                 title="Valor do Emprestimo"
-                value={this.state.valorEmprestimo}
-                max={this.state.maxEmprestimo}
-                min={this.state.minEmprestimo}
+                value={this.props.valorEmprestimo}
+                max={this.props.maxEmprestimo}
+                min={this.props.minEmprestimo}
             />
             <SliderInput
                 name="valorEmprestimo"
                 onChange={this.handleChange}
-                value={this.state.valorEmprestimo}
-                max={this.state.maxEmprestimo}
-                min={this.state.minEmprestimo}
+                value={this.props.valorEmprestimo}
+                max={this.props.maxEmprestimo}
+                min={this.props.minEmprestimo}
             />
         </form>
     }
 }
 
-// const CreditCalculatorForm : React.FC = () => {
-//     const [parcelas, setParcelas] = useState(24)
-//     const [garantia, setGarantia] = useState<string>(Garantia.IMOVEL)
-//     const [valorGarantia, setValorGarantia] = useState(5000)
-//     const [valorEmprestimo, setValorEmprestimo] = useState(3000)
-//     const [minGarantia, setMinGarantia] = useState(5000)
-//     const [maxGarantia, setMaxGarantia] = useState(3000000)
-//     const [minEmprestimo, setMinEmprestimo] = useState(3000)
-//     const [maxEmprestimo, setMaxEmprestimo] = useState(100000)
+const mapStateToProps = ({ creditCalculatorForm }: IState) => ({ ...creditCalculatorForm })
+const mapDispatchToProps = {
+    updateGarantia,
+    updateParcelas,
+    updateValorEmprestimo,
+    updateValorGarantia
+}
 
-//     return <form className="cc-form">
-//         <SelectField name="parcelas" title="Número de parcelas" options={} />
-//     </form>
-// }
-
-export default CreditCalculatorForm
+export default connect(mapStateToProps, mapDispatchToProps)(CreditCalculatorForm)

@@ -10,6 +10,8 @@ export interface ICreditCalculatorForm {
     maxGarantia: number,
     minEmprestimo: number,
     maxEmprestimo: number,
+    valorParcela: number | null,
+    totalAPagar: number | null
 }
 
 export interface IState {
@@ -27,6 +29,8 @@ const state: IState = {
         maxGarantia: 3000000,
         minEmprestimo: 3000,
         maxEmprestimo: 100000,
+        valorParcela: 0,
+        totalAPagar: 0,
     }
 }
 
